@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0072BB</color>
+    <color name="colorPrimaryDark">#0072BB</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="modra">#0072BB</color>
+    <color name="rdeca">#FF4C3B</color>
+    <color name="rumene">#FFD034</color>
+    <color name="siva">#C6C8CA</color>
+    <color name="bela">#FFFFFF</color>
+</resources>
