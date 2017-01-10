@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
     //play next
     private void playNext(){
         musicSrv.playNext();
+
         if(playbackPaused){
           //  setController();
             playbackPaused=false;

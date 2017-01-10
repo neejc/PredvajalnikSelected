@@ -288,6 +288,8 @@ public class MusicService extends Service implements
         Pesem playSong = songs.get(songPosn);
         songTitle=playSong.dobiNaslov();
         songArtist=playSong.dobiIzvajalca();
+  //      songs.get(songPosn).dodajPredvajanje();
+
         //get id
         long currSong = playSong.dobiID();
         //set uri

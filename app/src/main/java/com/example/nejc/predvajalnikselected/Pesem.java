@@ -35,7 +35,7 @@ public class Pesem {
     public String dobiIzvajalca(){return izvajalec;}
     public boolean dobiPriljubljena(){return priljubljena;}
 
-
+    public void dodajPredvajanje(){stPredvajanj++;}
     @Override
     public String toString() {
         return "Pesem{" +
