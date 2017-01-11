@@ -104,9 +104,8 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
         konfig = beriIzJSONKonfiguracija();
 
 
-
-       // if(!preveriCeObstaja())
-        zapisiVJSON(songList);
+        if(!preveriCeObstaja()) //dodano
+            zapisiVJSON(songList);
 
         shranjene = beriIzJSON();
 
@@ -206,9 +205,20 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
         }
     }
 
+    public ArrayList<Pesem> dodajPredvajanje(int idPesmi) {
+        ArrayList<Pesem> najdeni = new ArrayList<Pesem>();
+        for (int i=0; i<shranjene.size(); i++) {
+            if (shranjene.get(i).dobiID() == idPesmi)
+                shranjene.get(i).dodajPredvajanje();
+        }
+        return najdeni;
+    }
+
     public void songPicked(View view){
         musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
         musicSrv.dodajVZgodovino(Integer.parseInt(view.getTag().toString()));
+        dodajPredvajanje(Integer.parseInt(view.getTag().toString()));
+        zapisiVJSON(shranjene);
     //    View v;
     //    v = songView.findViewById(Integer.parseInt(view.getTag().toString()));
     //    v.getBackground().setColorFilter(Color.parseColor("#0072BB"), PorterDuff.Mode.DARKEN);
