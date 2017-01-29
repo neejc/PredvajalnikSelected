@@ -6,13 +6,13 @@
     tools:context="com.example.nejc.predvajalnikselected.MainActivity">
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/song_list"
         android:layout_centerHorizontal="true"
         android:paddingTop="100px"
         android:padding="10dp"
-        android:background="@color/bela" />
+        android:background="@color/bela"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
 
     <FrameLayout
         android:layout_width="match_parent"

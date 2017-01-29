@@ -12,12 +12,24 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:background="@drawable/selector"/>
 
     <TextView
         android:id="@+id/song_artist"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:background="@drawable/selector"
+        android:layout_marginRight="100px"/>
+
+    <CheckBox
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        android:button="@drawable/favorite"
+        android:layout_width="150px"
+        android:layout_marginTop="-40px"
+        android:layout_marginLeft="800px"/>
+
 
 </LinearLayout>

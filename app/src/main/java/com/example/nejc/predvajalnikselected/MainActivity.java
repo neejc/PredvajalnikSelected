@@ -13,9 +13,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
         setContentView(R.layout.activity_main);
 
         songView = (ListView) findViewById(R.id.song_list);
+        registerForContextMenu(songView);
         songList = new ArrayList<Pesem>();
         shranjene = new ArrayList<Pesem>();
         data = new DataAll();
@@ -215,6 +218,7 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
     }
 
     public void songPicked(View view){
+       // view.setSelected(true);
         musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
         musicSrv.dodajVZgodovino(Integer.parseInt(view.getTag().toString()));
         dodajPredvajanje(Integer.parseInt(view.getTag().toString()));
@@ -658,5 +662,6 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
     public int getAudioSessionId() {
         return 0;
     }
+
 
 }
