@@ -34,6 +34,8 @@ public class Pesem {
     public String dobiNaslov(){return naslov;}
     public String dobiIzvajalca(){return izvajalec;}
     public boolean dobiPriljubljena(){return priljubljena;}
+    public void nastaviPriljubljena(){priljubljena = true; }
+    public void odstraniPriljubljena(){priljubljena = false; }
 
     public void dodajPredvajanje(){stPredvajanj++;}
     @Override

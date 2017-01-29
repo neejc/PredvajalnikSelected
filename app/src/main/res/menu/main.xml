@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:predvajalnikselected="http://schemas.android.com/apk/res-auto">
+    xmlns:predvajalnikselected="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/action_fav"
+        android:orderInCategory="3"
+        android:icon="@drawable/favoff"
+        predvajalnikselected:showAsAction="always"
+        android:title="Nastavitve" />
 
     <item
         android:id="@+id/action_shuffle"

@@ -9,12 +9,12 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/appicon"
-        android:label="@string/app_name"
+        android:label="Selected"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:label="Selected"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -25,7 +25,7 @@
         </activity>
 
         <activity android:name=".Splash"
-            android:label="@string/app_name" >
+            android:label="Selected" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

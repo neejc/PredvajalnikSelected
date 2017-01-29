@@ -55,12 +55,14 @@ import java.io.File;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity  implements MediaPlayerControl {
 
     private ArrayList<Pesem> songList; //dobi vse, ki se trenutno nahajajo na sd kartici
     private ArrayList<Pesem> shranjene; //dobi vse shranjene iz jsona
     private ArrayList<Pesem> dataSeznam;
+    private ArrayList<Pesem> priljubljene;
     private ListView songView;
     private DataAll data;
     private MusicService musicSrv;
@@ -73,9 +75,11 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
 
     private boolean repeat = false;
     private boolean shuffle = false;
+    private boolean fav = false;
 
     MenuItem shuffleItem;
     MenuItem repeatItem;
+    MenuItem favItem;
 
     private boolean paused=false, playbackPaused=false;
 
@@ -85,7 +89,7 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
         setContentView(R.layout.activity_main);
 
         songView = (ListView) findViewById(R.id.song_list);
-        registerForContextMenu(songView);
+        //registerForContextMenu(songView);
         songList = new ArrayList<Pesem>();
         shranjene = new ArrayList<Pesem>();
         data = new DataAll();
@@ -208,13 +212,11 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
         }
     }
 
-    public ArrayList<Pesem> dodajPredvajanje(int idPesmi) {
-        ArrayList<Pesem> najdeni = new ArrayList<Pesem>();
-        for (int i=0; i<shranjene.size(); i++) {
+    public void dodajPredvajanje(int idPesmi) {
+        for (int i=0; i < shranjene.size(); i++) {
             if (shranjene.get(i).dobiID() == idPesmi)
                 shranjene.get(i).dodajPredvajanje();
         }
-        return najdeni;
     }
 
     public void songPicked(View view){
@@ -253,6 +255,7 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
 
         shuffleItem = menu.findItem(R.id.action_shuffle);
         repeatItem = menu.findItem(R.id.action_repeat);
+        favItem = menu.findItem(R.id.action_fav);
 
         procesirajKonfiguracijo();
 
@@ -274,6 +277,11 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
             shuffle = false;
         }
 
+        if(konfig.getFavorite()){
+            favItem.setIcon(getResources().getDrawable(R.drawable.favon));
+            fav = true;
+        }
+
     }
 
     @Override
@@ -290,11 +298,11 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
                 }
 
                 if(shuffle) {
-                    zapisiKonfiguracijoVJSON(new Konfiguracija(false,false));
+                    zapisiKonfiguracijoVJSON(new Konfiguracija(false,false,fav));
                     item.setIcon(getResources().getDrawable(R.drawable.shuffle));
                 }
                 else {
-                    zapisiKonfiguracijoVJSON(new Konfiguracija(true,false));
+                    zapisiKonfiguracijoVJSON(new Konfiguracija(true,false,fav));
                     item.setIcon(getResources().getDrawable(R.drawable.shuffleon));
                 }
 
@@ -314,16 +322,34 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
                 }
 
                 if(repeat) {
-                    zapisiKonfiguracijoVJSON(new Konfiguracija(false,false));
+                    zapisiKonfiguracijoVJSON(new Konfiguracija(false,false,fav));
                     item.setIcon(getResources().getDrawable(R.drawable.repeat));
                 }
                 else {
-                    zapisiKonfiguracijoVJSON(new Konfiguracija(false,true));
+                    zapisiKonfiguracijoVJSON(new Konfiguracija(false,true,fav));
                     item.setIcon(getResources().getDrawable(R.drawable.repeaton));
                 }
 
 
                 repeat = !repeat;
+                break;
+            case R.id.action_fav:
+                if(!fav) { //favon
+                    zapisiKonfiguracijoVJSON(new Konfiguracija(shuffle,repeat,true));
+                    favItem.setIcon(getResources().getDrawable(R.drawable.favon));
+
+                    SongAdapter songAdt = new SongAdapter(this, dobiPriljubljene());
+                    songView.setAdapter(songAdt);
+                }
+                else //favoff
+                {
+                    zapisiKonfiguracijoVJSON(new Konfiguracija(shuffle,repeat,false));
+                    favItem.setIcon(getResources().getDrawable(R.drawable.favoff));
+
+                    SongAdapter songAdt = new SongAdapter(this, shranjene);
+                    songView.setAdapter(songAdt);
+                }
+                fav = !fav;
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -545,6 +571,8 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
 
         String jsonString = readFromFile();
         Log.d("MYAPP", readFromFile());
+        Random r = new Random();
+        int i1;
 
         try {
             JSONArray jsonarray = new JSONArray(jsonString);
@@ -556,7 +584,13 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
                 String naslov = jsonobject.getString("naslov");
                 String izvajalec = jsonobject.getString("izvajalec");
                 String priljubljena = jsonobject.getString("priljubljena");
-                boolean priljubljena1 = Boolean.parseBoolean(priljubljena);
+                boolean priljubljena1; //= Boolean.parseBoolean(priljubljena);
+                i1 = r.nextInt(10 - 1) + 1;
+                if(i1 > 2)
+                    priljubljena1 = false;
+                else
+                    priljubljena1 = true;
+
                 String stPredvajanj = jsonobject.getString("stPredvajanj");
                 int stP = Integer.parseInt(stPredvajanj);
                 rez.add(new Pesem(idParsan, naslov, izvajalec,priljubljena1,stP));
@@ -581,9 +615,12 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
             boolean shuffle = Boolean.parseBoolean(s);
             String r = jsonobject.getString("repeat");
             boolean repeat = Boolean.parseBoolean(r);
+            String f = jsonobject.getString("favorite");
+            boolean favorite = Boolean.parseBoolean(r);
 
             k.setShuffle(shuffle);
             k.setRepeat(repeat);
+            k.setFavorite(favorite);
 
 
         } catch (JSONException e) {
@@ -661,6 +698,39 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
     @Override
     public int getAudioSessionId() {
         return 0;
+    }
+
+
+    public void dodajPriljubljeno(int idPesmi) {
+        /*
+        shranjene = beriIzJSON();
+        for (int i=0; i < shranjene.size(); i++) {
+            if (shranjene.get(i).dobiID() == idPesmi)
+                shranjene.get(i).nastaviPriljubljena();
+        }
+        */
+    }
+
+    public void odstraniPriljubljeno(int idPesmi) {
+        /*
+        shranjene = beriIzJSON();
+        for (int i=0; i < shranjene.size(); i++) {
+            if (shranjene.get(i).dobiID() == idPesmi)
+                shranjene.get(i).odstraniPriljubljena();
+        }
+        */
+    }
+
+    public ArrayList<Pesem> dobiPriljubljene(){
+        ArrayList<Pesem> priljubljene = new ArrayList<Pesem>();
+        for(int i = 0; i < shranjene.size(); i++)
+        {
+            if(shranjene.get(i).dobiPriljubljena() == true){
+                priljubljene.add(shranjene.get(i));
+            }
+        }
+
+        return priljubljene;
     }
 
 
