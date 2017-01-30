@@ -4,6 +4,13 @@
     xmlns:app="http://schemas.android.com/tools">
 
     <item
+        android:id="@+id/action_options"
+        android:orderInCategory="4"
+        android:icon="@drawable/options"
+        predvajalnikselected:showAsAction="always"
+        android:title="Nastavitve" />
+
+    <item
         android:id="@+id/action_fav"
         android:orderInCategory="3"
         android:icon="@drawable/favoff"

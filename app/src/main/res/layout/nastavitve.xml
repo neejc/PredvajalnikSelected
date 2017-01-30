@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/modra"
+        android:layout_alignTop="@+id/textView6"
+        android:layout_alignParentStart="true"
+        android:id="@+id/view4" />
+
+    <TextView
+        android:text="Prikaži:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:fontFamily="sans-serif"
+        android:layout_weight="0.03"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox2"
+        android:checked="true"
+        android:buttonTint="@color/modra"
+        android:layout_alignBaseline="@+id/textView6"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_toEndOf="@+id/textView6" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mp3Box"
+        android:checked="true"
+        android:buttonTint="@color/modra"
+        android:layout_alignBaseline="@+id/textView7"
+        android:layout_alignBottom="@+id/textView7"
+        android:layout_toEndOf="@+id/textView7" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox5"
+        android:checked="true"
+        android:buttonTint="@color/modra"
+        android:layout_alignBaseline="@+id/textView8"
+        android:layout_alignBottom="@+id/textView8"
+        android:layout_toEndOf="@+id/textView8" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox3"
+        android:checked="true"
+        android:buttonTint="@color/modra"
+        android:layout_alignBaseline="@+id/textView9"
+        android:layout_alignBottom="@+id/textView9"
+        android:layout_toEndOf="@+id/textView9" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox4"
+        android:checked="true"
+        android:buttonTint="@color/modra"
+        android:layout_alignBaseline="@+id/textView10"
+        android:layout_alignBottom="@+id/textView10"
+        android:layout_toEndOf="@+id/textView10" />
+
+    <TextView
+        android:text="Neznane izvajalce:"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView6"
+        android:fontFamily="sans-serif"
+        android:layout_weight="0.03"
+        android:textSize="16dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:text="Mp3 datoteke:"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView7"
+        android:fontFamily="sans-serif"
+        android:layout_weight="0.03"
+        android:textSize="16dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/checkBox2"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Kratke pesmi:"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView8"
+        android:fontFamily="sans-serif"
+        android:layout_weight="0.03"
+        android:textSize="16dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/mp3Box"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Srednje pesmi:"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView9"
+        android:fontFamily="sans-serif"
+        android:layout_weight="0.03"
+        android:textSize="16dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/checkBox5"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Dolge pesmi:"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView10"
+        android:fontFamily="sans-serif"
+        android:layout_weight="0.03"
+        android:textSize="16dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/checkBox3"
+        android:layout_alignParentStart="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/modra"
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/checkBox4"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

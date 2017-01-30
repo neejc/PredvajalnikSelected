@@ -33,6 +33,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Nastavitve" android:label="Nastavitve" android:parentActivityName=".MainActivity"></activity>
+
         <service
             android:name=".MusicService"
             android:exported="false" >

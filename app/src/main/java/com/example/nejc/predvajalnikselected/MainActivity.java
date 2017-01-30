@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
     MenuItem shuffleItem;
     MenuItem repeatItem;
     MenuItem favItem;
+    MenuItem optionsItem;
 
     private boolean paused=false, playbackPaused=false;
 
@@ -263,6 +264,7 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
         shuffleItem = menu.findItem(R.id.action_shuffle);
         repeatItem = menu.findItem(R.id.action_repeat);
         favItem = menu.findItem(R.id.action_fav);
+        optionsItem = menu.findItem(R.id.action_options);
 
         procesirajKonfiguracijo();
 
@@ -357,6 +359,10 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
                     songView.setAdapter(songAdt);
                 }
                 fav = !fav;
+                break;
+            case R.id.action_options:
+                Intent i = new Intent(getApplicationContext(), Nastavitve.class);
+                startActivity(i);
                 break;
         }
         return super.onOptionsItemSelected(item);
