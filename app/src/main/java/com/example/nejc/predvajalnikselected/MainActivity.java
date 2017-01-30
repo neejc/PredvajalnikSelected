@@ -126,9 +126,16 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
          //   }
         //});
 
-        SongAdapter songAdt = new SongAdapter(this, shranjene);
-        songView.setAdapter(songAdt);
 
+        if(fav == true) {
+            SongAdapter songAdt = new SongAdapter(this, dobiPriljubljene());
+            songView.setAdapter(songAdt);
+        }
+        else
+        {
+            SongAdapter songAdt = new SongAdapter(this, shranjene);
+            songView.setAdapter(songAdt);
+        }
         setController();
     }
 
@@ -584,12 +591,13 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
                 String naslov = jsonobject.getString("naslov");
                 String izvajalec = jsonobject.getString("izvajalec");
                 String priljubljena = jsonobject.getString("priljubljena");
-                boolean priljubljena1; //= Boolean.parseBoolean(priljubljena);
-                i1 = r.nextInt(10 - 1) + 1;
+                boolean priljubljena1 = Boolean.parseBoolean(priljubljena);
+              /*  i1 = r.nextInt(10 - 1) + 1;
                 if(i1 > 2)
                     priljubljena1 = false;
                 else
                     priljubljena1 = true;
+              */
 
                 String stPredvajanj = jsonobject.getString("stPredvajanj");
                 int stP = Integer.parseInt(stPredvajanj);
@@ -616,11 +624,11 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
             String r = jsonobject.getString("repeat");
             boolean repeat = Boolean.parseBoolean(r);
             String f = jsonobject.getString("favorite");
-            boolean favorite = Boolean.parseBoolean(r);
+            boolean favorite = Boolean.parseBoolean(f);
 
             k.setShuffle(shuffle);
             k.setRepeat(repeat);
-            k.setFavorite(favorite);
+            k.setFavorite(false);
 
 
         } catch (JSONException e) {
@@ -731,6 +739,11 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
         }
 
         return priljubljene;
+    }
+
+    public void refresh(){
+        finish();
+        startActivity(getIntent());
     }
 
 

@@ -22,6 +22,14 @@ public class Pesem {
         this.stPredvajanj = 0;
     }
 
+    public Pesem(long songID, String naslov, String izvajalec, boolean priljubljena) {
+        this.id = songID;
+        this.naslov = naslov;
+        this.izvajalec = izvajalec;
+        this.priljubljena = priljubljena;
+        this.stPredvajanj = 0;
+    }
+
     public Pesem(long songID, String naslov, String izvajalec, boolean priljubljena, int stPredvajanj) {
         this.id = songID;
         this.naslov = naslov;
