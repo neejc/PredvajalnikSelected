@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
 
     private ArrayList<Pesem> songList; //dobi vse, ki se trenutno nahajajo na sd kartici
     private ArrayList<Pesem> shranjene; //dobi vse shranjene iz jsona
+    private ArrayList<Pesem> vse; //vse
+    private ArrayList<Pesem> filtrirane; //vse
     private ArrayList<Pesem> dataSeznam;
     private ArrayList<Pesem> priljubljene;
     private ListView songView;
@@ -69,6 +71,8 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
     private Intent playIntent;
     private boolean musicBound=false;
     private MusicController controller;
+    private NastavitveClass nastavitve;
+    private boolean filtriranNeznani = false;
 
     Konfiguracija konfig;
 
@@ -82,6 +86,11 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
     MenuItem favItem;
     MenuItem optionsItem;
 
+    private boolean filtriramNeznane = false;
+    private boolean filtriramKratke = false;
+    private boolean filtriramSrednje = false;
+    private boolean filtriramDolge = false;
+
     private boolean paused=false, playbackPaused=false;
 
     @Override
@@ -93,6 +102,7 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
         //registerForContextMenu(songView);
         songList = new ArrayList<Pesem>();
         shranjene = new ArrayList<Pesem>();
+        vse = new ArrayList<Pesem>();
         data = new DataAll();
 
         dataSeznam = data.vrniSeznamPesmi();
@@ -117,6 +127,8 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
 
         shranjene = beriIzJSON();
 
+       // zapisiVJSON(shranjene);
+
         //data.preveri(songList); preveri ce je kak nov oz. ce je kaksen manj
 
         //Collections.sort(songList, new Comparator<Pesem>(){
@@ -126,6 +138,14 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
         //        return a.dobiNaslov().compareTo(b.dobiNaslov());
          //   }
         //});
+        nastavitve = beriIzJSONNastavitve();
+
+        filtrirane = shranjene;
+
+        if(nastavitve.isNeznani() == false) {
+            filtrirane = filtrirajPesmi(filtrirane, "neznani");
+            filtriranNeznani = true;
+        }
 
 
         if(fav == true) {
@@ -134,7 +154,7 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
         }
         else
         {
-            SongAdapter songAdt = new SongAdapter(this, shranjene);
+            SongAdapter songAdt = new SongAdapter(this, filtrirane);
             songView.setAdapter(songAdt);
         }
         setController();
@@ -157,6 +177,34 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
         if(paused){
             paused=false;
         }
+
+        nastavitve = beriIzJSONNastavitve();
+
+        filtrirane = shranjene;
+
+        if(nastavitve.isNeznani() == false) {
+            filtrirane = filtrirajPesmi(filtrirane, "neznani");
+            filtriranNeznani = true;
+        }
+
+        if(nastavitve.isMp3() == false) {
+            filtrirane = filtrirajPesmi(filtrirane, "mp3");
+        }
+
+        if(nastavitve.isKratke() == false) {
+            filtrirane = filtrirajPesmi(filtrirane, "kratke");
+        }
+
+        if(nastavitve.isSrednje() == false) {
+            filtrirane = filtrirajPesmi(filtrirane, "srednje");
+        }
+
+        if(nastavitve.isDolge() == false) {
+            filtrirane = filtrirajPesmi(filtrirane, "dolge");
+        }
+
+        SongAdapter songAdt = new SongAdapter(this, filtrirane);
+        songView.setAdapter(songAdt);
 
         // Set up receiver for media player onPrepared broadcast
         LocalBroadcastManager.getInstance(this).registerReceiver(onPrepareReceiver,
@@ -354,8 +402,7 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
                 {
                     zapisiKonfiguracijoVJSON(new Konfiguracija(shuffle,repeat,false));
                     favItem.setIcon(getResources().getDrawable(R.drawable.favoff));
-
-                    SongAdapter songAdt = new SongAdapter(this, shranjene);
+                    SongAdapter songAdt = new SongAdapter(this, filtrirane);
                     songView.setAdapter(songAdt);
                 }
                 fav = !fav;
@@ -598,16 +645,28 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
                 String izvajalec = jsonobject.getString("izvajalec");
                 String priljubljena = jsonobject.getString("priljubljena");
                 boolean priljubljena1 = Boolean.parseBoolean(priljubljena);
-              /*  i1 = r.nextInt(10 - 1) + 1;
+
+             /*   i1 = r.nextInt(10 - 1) + 1;
                 if(i1 > 2)
                     priljubljena1 = false;
                 else
                     priljubljena1 = true;
-              */
+            */
 
                 String stPredvajanj = jsonobject.getString("stPredvajanj");
                 int stP = Integer.parseInt(stPredvajanj);
-                rez.add(new Pesem(idParsan, naslov, izvajalec,priljubljena1,stP));
+                String dolzina = jsonobject.getString("dolzina");
+                int dolzina1 = Integer.parseInt(dolzina);
+                /*
+                i1 = r.nextInt(10 - 1) + 1;
+                if(i1 > 2)
+                    dolzina1 = 1;
+                else if(i > 5)
+                    dolzina1 = 2;
+                else
+                    dolzina1 = 3;
+                */
+                rez.add(new Pesem(idParsan, naslov, izvajalec,priljubljena1,stP, dolzina1));
             }
         } catch (JSONException e) {
             Log.e("MYAPP", "unexpected JSON exception", e);
@@ -737,19 +796,174 @@ public class MainActivity extends AppCompatActivity  implements MediaPlayerContr
 
     public ArrayList<Pesem> dobiPriljubljene(){
         ArrayList<Pesem> priljubljene = new ArrayList<Pesem>();
-        for(int i = 0; i < shranjene.size(); i++)
+
+        if(filtriranNeznani) {
+            for (int i = 0; i < filtrirane.size(); i++) {
+                if (filtrirane.get(i).dobiPriljubljena() == true) {
+                    priljubljene.add(filtrirane.get(i));
+                }
+            }
+        }
+        else
         {
-            if(shranjene.get(i).dobiPriljubljena() == true){
-                priljubljene.add(shranjene.get(i));
+            for (int i = 0; i < shranjene.size(); i++) {
+                if (shranjene.get(i).dobiPriljubljena() == true) {
+                    priljubljene.add(shranjene.get(i));
+                }
             }
         }
 
         return priljubljene;
     }
 
+    public ArrayList<Pesem> filtrirajPesmi(ArrayList<Pesem> vhodne, String nacin){
+        ArrayList<Pesem> filtrirane = new ArrayList<Pesem>();
+
+
+        for (int i = 0; i < vhodne.size(); i++) {
+            if(nacin == "neznani") {
+                if (!"<unknown>".equals(vhodne.get(i).dobiIzvajalca())) {
+                    //  Toast.makeText(MainActivity.this, shranjene.get(i).dobiIzvajalca(), Toast.LENGTH_SHORT).show();
+                    filtrirane.add(vhodne.get(i));
+                }
+            }
+            if(nacin == "mp3") {
+                if ("mp3".equals(vhodne.get(i).dobiNaslov())) {
+                    //  Toast.makeText(MainActivity.this, shranjene.get(i).dobiIzvajalca(), Toast.LENGTH_SHORT).show();
+                    filtrirane.add(vhodne.get(i));
+                }
+            }
+            if(nacin == "kratke") {
+                if (vhodne.get(i).dobiDolzino() != 1) {
+                    //  Toast.makeText(MainActivity.this, shranjene.get(i).dobiIzvajalca(), Toast.LENGTH_SHORT).show();
+                    filtrirane.add(vhodne.get(i));
+                }
+            }
+            if(nacin == "srednje") {
+                if (vhodne.get(i).dobiDolzino() != 2) {
+                    //  Toast.makeText(MainActivity.this, shranjene.get(i).dobiIzvajalca(), Toast.LENGTH_SHORT).show();
+                    filtrirane.add(vhodne.get(i));
+                }
+            }
+            if(nacin == "dolge") {
+                if (vhodne.get(i).dobiDolzino() != 3) {
+                    //  Toast.makeText(MainActivity.this, shranjene.get(i).dobiIzvajalca(), Toast.LENGTH_SHORT).show();
+                    filtrirane.add(vhodne.get(i));
+                }
+            }
+        }
+
+        return filtrirane;
+    }
+
     public void refresh(){
         finish();
         startActivity(getIntent());
+    }
+
+    private NastavitveClass beriIzJSONNastavitve(){
+
+        NastavitveClass n = new NastavitveClass();
+
+        String jsonString = readFromFileNastavitve();
+        Log.d("MYAPP", readFromFileNastavitve());
+
+        try {
+            JSONObject jsonobject = new JSONObject(jsonString);
+            String ne = jsonobject.getString("neznani");
+            boolean neznani = Boolean.parseBoolean(ne);
+            String m = jsonobject.getString("mp3");
+            boolean mp3 = Boolean.parseBoolean(m);
+            String k = jsonobject.getString("kratke");
+            boolean kratki = Boolean.parseBoolean(k);
+            String s = jsonobject.getString("srednje");
+            boolean srednji = Boolean.parseBoolean(s);
+            String d = jsonobject.getString("dolge");
+            boolean dolgi = Boolean.parseBoolean(d);
+
+            n.setNeznani(neznani);
+            n.setMp3(mp3);
+            n.setKratke(kratki);
+            n.setDolge(dolgi);
+            n.setSrednje(srednji);
+
+
+        } catch (JSONException e) {
+            Log.e("MYAPP", "unexpected JSON exception", e);
+        }
+
+        return n;
+    }
+
+    private String readFromFileNastavitve() {
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = openFileInput("nastavitve.txt");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
+    }
+
+    private void zapisiNastavitveVJSON(NastavitveClass n){
+        JSONObject obj;
+
+        obj = n.toJSON();
+
+        String toJSON = obj.toString();
+
+        writeToFileNastavitve(toJSON);
+
+    }
+
+    private void writeToFileNastavitve(String data) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("nastavitve.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    private Boolean preveriCeObstajaNastavitve(){
+        try {
+            InputStream inputStream = openFileInput("nastavitve.txt");
+
+            if ( inputStream != null ) {
+                return true;
+            }
+            else
+                return false;
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+            return false;
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+            return false;
+        }
     }
 
 

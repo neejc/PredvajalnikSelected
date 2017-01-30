@@ -29,7 +29,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox2"
+        android:id="@+id/neznaneBox"
         android:checked="true"
         android:buttonTint="@color/modra"
         android:layout_alignBaseline="@+id/textView6"
@@ -39,17 +39,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/mp3Box"
-        android:checked="true"
-        android:buttonTint="@color/modra"
-        android:layout_alignBaseline="@+id/textView7"
-        android:layout_alignBottom="@+id/textView7"
-        android:layout_toEndOf="@+id/textView7" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBox5"
+        android:id="@+id/kratkeBox"
         android:checked="true"
         android:buttonTint="@color/modra"
         android:layout_alignBaseline="@+id/textView8"
@@ -59,22 +49,12 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox3"
+        android:id="@+id/srednjeBox"
         android:checked="true"
         android:buttonTint="@color/modra"
         android:layout_alignBaseline="@+id/textView9"
         android:layout_alignBottom="@+id/textView9"
         android:layout_toEndOf="@+id/textView9" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBox4"
-        android:checked="true"
-        android:buttonTint="@color/modra"
-        android:layout_alignBaseline="@+id/textView10"
-        android:layout_alignBottom="@+id/textView10"
-        android:layout_toEndOf="@+id/textView10" />
 
     <TextView
         android:text="Neznane izvajalce:"
@@ -100,7 +80,7 @@
         android:textSize="16dp"
         android:paddingTop="20dp"
         android:paddingLeft="10dp"
-        android:layout_below="@+id/checkBox2"
+        android:layout_below="@+id/neznaneBox"
         android:layout_alignParentStart="true" />
 
     <TextView
@@ -126,7 +106,7 @@
         android:textSize="16dp"
         android:paddingTop="20dp"
         android:paddingLeft="10dp"
-        android:layout_below="@+id/checkBox5"
+        android:layout_below="@+id/kratkeBox"
         android:layout_alignParentStart="true" />
 
     <TextView
@@ -139,7 +119,7 @@
         android:textSize="16dp"
         android:paddingTop="20dp"
         android:paddingLeft="10dp"
-        android:layout_below="@+id/checkBox3"
+        android:layout_below="@+id/srednjeBox"
         android:layout_alignParentStart="true" />
 
     <View
@@ -147,8 +127,28 @@
         android:layout_height="1dp"
         android:background="@color/modra"
         android:layout_marginTop="13dp"
-        android:layout_below="@+id/checkBox4"
+        android:layout_below="@+id/dolgeBox"
         android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mp3Box"
+        android:checked="true"
+        android:buttonTint="@color/modra"
+        android:layout_alignBaseline="@+id/textView7"
+        android:layout_alignBottom="@+id/textView7"
+        android:layout_toEndOf="@+id/textView7" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dolgeBox"
+        android:checked="true"
+        android:buttonTint="@color/modra"
+        android:layout_alignBaseline="@+id/textView10"
+        android:layout_alignBottom="@+id/textView10"
+        android:layout_toEndOf="@+id/textView10" />
 
 
 </RelativeLayout>

@@ -12,6 +12,7 @@ public class Pesem {
     private String izvajalec;
     private boolean priljubljena;
     private int stPredvajanj;
+    private int dolzina; //1 - kratka, 2 - srednja, 3 - dolga
 
 
     public Pesem(long songID, String naslov, String izvajalec) {
@@ -20,6 +21,7 @@ public class Pesem {
         this.izvajalec = izvajalec;
         this.priljubljena = false;
         this.stPredvajanj = 0;
+        this.dolzina = 0;
     }
 
     public Pesem(long songID, String naslov, String izvajalec, boolean priljubljena) {
@@ -28,6 +30,7 @@ public class Pesem {
         this.izvajalec = izvajalec;
         this.priljubljena = priljubljena;
         this.stPredvajanj = 0;
+        this.dolzina = 0;
     }
 
     public Pesem(long songID, String naslov, String izvajalec, boolean priljubljena, int stPredvajanj) {
@@ -36,6 +39,16 @@ public class Pesem {
         this.izvajalec = izvajalec;
         this.priljubljena = priljubljena;
         this.stPredvajanj = stPredvajanj;
+        this.dolzina = 0;
+    }
+
+    public Pesem(long songID, String naslov, String izvajalec, boolean priljubljena, int stPredvajanj, int dolzina) {
+        this.id = songID;
+        this.naslov = naslov;
+        this.izvajalec = izvajalec;
+        this.priljubljena = priljubljena;
+        this.stPredvajanj = stPredvajanj;
+        this.dolzina = dolzina;
     }
 
     public long dobiID(){return id;}
@@ -44,6 +57,8 @@ public class Pesem {
     public boolean dobiPriljubljena(){return priljubljena;}
     public void nastaviPriljubljena(){priljubljena = true; }
     public void odstraniPriljubljena(){priljubljena = false; }
+    public int dobiDolzino(){return dolzina;}
+    public void nastaviDolzino(int d){dolzina = d;}
 
     public void dodajPredvajanje(){stPredvajanj++;}
     @Override
@@ -65,6 +80,7 @@ public class Pesem {
             jsonObject.put("izvajalec", izvajalec);
             jsonObject.put("priljubljena", priljubljena);
             jsonObject.put("stPredvajanj", stPredvajanj);
+            jsonObject.put("dolzina", dolzina);
 
             return jsonObject;
         } catch (JSONException e) {
