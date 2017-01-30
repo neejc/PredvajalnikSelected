@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:paddingRight="16dp"
+    android:background="@color/modra">
 
     <View
         android:layout_width="match_parent"
@@ -12,7 +13,8 @@
         android:background="@color/modra"
         android:layout_alignTop="@+id/textView6"
         android:layout_alignParentStart="true"
-        android:id="@+id/view4" />
+        android:id="@+id/view4"
+        android:backgroundTint="@color/bela"/>
 
     <TextView
         android:text="Prikaži:"
@@ -24,14 +26,15 @@
         android:fontFamily="sans-serif"
         android:layout_weight="0.03"
         android:paddingTop="20dp"
-        android:paddingLeft="10dp"/>
+        android:paddingLeft="10dp"
+        android:textColor="@color/bela"/>
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/neznaneBox"
         android:checked="true"
-        android:buttonTint="@color/modra"
+        android:buttonTint="@color/bela"
         android:layout_alignBaseline="@+id/textView6"
         android:layout_alignBottom="@+id/textView6"
         android:layout_toEndOf="@+id/textView6" />
@@ -41,7 +44,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/kratkeBox"
         android:checked="true"
-        android:buttonTint="@color/modra"
+        android:buttonTint="@color/bela"
         android:layout_alignBaseline="@+id/textView8"
         android:layout_alignBottom="@+id/textView8"
         android:layout_toEndOf="@+id/textView8" />
@@ -51,7 +54,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/srednjeBox"
         android:checked="true"
-        android:buttonTint="@color/modra"
+        android:buttonTint="@color/bela"
         android:layout_alignBaseline="@+id/textView9"
         android:layout_alignBottom="@+id/textView9"
         android:layout_toEndOf="@+id/textView9" />
@@ -68,7 +71,8 @@
         android:paddingLeft="10dp"
         android:layout_below="@+id/textView5"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:textColor="@color/bela"/>
 
     <TextView
         android:text="Mp3 datoteke:"
@@ -81,7 +85,8 @@
         android:paddingTop="20dp"
         android:paddingLeft="10dp"
         android:layout_below="@+id/neznaneBox"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/bela"/>
 
     <TextView
         android:text="Kratke pesmi:"
@@ -94,7 +99,8 @@
         android:paddingTop="20dp"
         android:paddingLeft="10dp"
         android:layout_below="@+id/mp3Box"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/bela"/>
 
     <TextView
         android:text="Srednje pesmi:"
@@ -107,7 +113,8 @@
         android:paddingTop="20dp"
         android:paddingLeft="10dp"
         android:layout_below="@+id/kratkeBox"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/bela"/>
 
     <TextView
         android:text="Dolge pesmi:"
@@ -120,7 +127,8 @@
         android:paddingTop="20dp"
         android:paddingLeft="10dp"
         android:layout_below="@+id/srednjeBox"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/bela"/>
 
     <View
         android:layout_width="match_parent"
@@ -128,14 +136,15 @@
         android:background="@color/modra"
         android:layout_marginTop="13dp"
         android:layout_below="@+id/dolgeBox"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:backgroundTint="@color/bela"/>
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/mp3Box"
         android:checked="true"
-        android:buttonTint="@color/modra"
+        android:buttonTint="@color/bela"
         android:layout_alignBaseline="@+id/textView7"
         android:layout_alignBottom="@+id/textView7"
         android:layout_toEndOf="@+id/textView7" />
@@ -145,7 +154,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/dolgeBox"
         android:checked="true"
-        android:buttonTint="@color/modra"
+        android:buttonTint="@color/bela"
         android:layout_alignBaseline="@+id/textView10"
         android:layout_alignBottom="@+id/textView10"
         android:layout_toEndOf="@+id/textView10" />
